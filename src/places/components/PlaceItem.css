@@ -1,0 +1,27 @@
+li {
+    margin: 0 auto;
+    text-align: center;
+    width: 380px;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.3);
+    background-color: #336d88;
+}
+
+.place-item-wrapper {
+    width: 100%;
+    display: inline-block;
+}
+
+.place-item-title {
+    color: white;
+}
+
+.place-item-buttons {
+    margin-bottom: 20px;
+}
+
+img {
+    max-width: 100%;
+    max-height: 100%;
+}

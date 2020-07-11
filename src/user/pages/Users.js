@@ -1,5 +1,6 @@
 import React from "react";
 import UsersList from "../components/UsersList";
+import { useParams } from 'react-router-dom';
 
 const Users = () => {
   const USERS = [
@@ -20,6 +21,12 @@ const Users = () => {
         name: "Nedim Hafizovic",
         image: "https://www.w3schools.com/howto/img_avatar.png",
         places: 1,
+      },
+      {
+        id: "u4",
+        name: "Adnan Lucevic",
+        image: "https://www.w3schools.com/howto/img_avatar.png",
+        places: 34,
       },
   ];
   return <UsersList items={USERS} />;

@@ -8,7 +8,7 @@ const UserItem = (props) => {
   return (
     <li className="user-item">
       <div>
-        <Link to={`/${props.id}/places`}>
+        <Link to={`/${props.id}/places`} style={{ textDecoration: "none" }}>
           <div className="user-item__avatar">
             <Avatar src={props.image} alt={props.name} />
           </div>

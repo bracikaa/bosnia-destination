@@ -1,6 +1,6 @@
 import React from 'react';
 
-const NewPlace = () => {
+const NewPlace = (props) => {
     return <h1>New Place Works</h1>
 }
 
