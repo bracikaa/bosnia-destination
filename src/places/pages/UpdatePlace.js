@@ -6,6 +6,7 @@ import {
 } from "../../shared/utils/validators";
 
 import Input from "../../shared/components/FormElements/Input";
+import "./Places.css";
 
 const DUMMY_PLACES = [
   {
@@ -55,6 +56,9 @@ const UpdatePlace = () => {
         value={identifiedPlace.description}
         valid={true}
       />
+      <button type="submit" disabled={true}>
+        Update Place
+      </button>
     </form>
   );
 };

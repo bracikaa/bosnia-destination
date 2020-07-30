@@ -1,7 +1,6 @@
 .footer {
     position: absolute;
     right: 0;
-    bottom: 0;
     left: 0;
     padding: 1rem;
     background-color: #204051;
@@ -9,6 +8,7 @@
     margin: 0;
     display: flex;
     justify-content: space-around;
+    margin-top: 3rem;
 }
 
 .footer__left {

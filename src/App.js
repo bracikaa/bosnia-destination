@@ -17,21 +17,23 @@ function App() {
   return (
     <Router>
       <MainNavigation />
-      <Switch>
-        <Route path="/" exact>
-          <Users />
-        </Route>
-        <Route path="/:userId/places" exact>
-          <UserPlaces />
-        </Route>
-        <Route path="/places/new" exact>
-          <NewPlace />
-        </Route>
-        <Route path="/places/:placeId" exact>
-          <UpdatePlace />
-        </Route>
-        <Redirect to="/" />
-      </Switch>
+      <div className="main-content">
+        <Switch>
+          <Route path="/" exact>
+            <Users />
+          </Route>
+          <Route path="/:userId/places" exact>
+            <UserPlaces />
+          </Route>
+          <Route path="/places/new" exact>
+            <NewPlace />
+          </Route>
+          <Route path="/places/:placeId" exact>
+            <UpdatePlace />
+          </Route>
+          <Redirect to="/" />
+        </Switch>
+      </div>
       <Footer />
     </Router>
   );
