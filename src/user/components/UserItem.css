@@ -25,7 +25,8 @@
     }
 }
 
-h2, h3 {
+.user-item__name,
+.user-item__count {
     color: white;
 }
 
@@ -38,6 +39,7 @@ h3 {
 }
 
 
-.user-item:hover h2, .user-item:hover h3 {
+.user-item:hover h2,
+.user-item:hover h3 {
     color: #3d405b;
 }

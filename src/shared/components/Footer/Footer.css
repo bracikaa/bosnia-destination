@@ -1,0 +1,26 @@
+.footer {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    padding: 1rem;
+    background-color: #204051;
+    text-align: center;
+    margin: 0;
+    display: flex;
+    justify-content: space-around;
+}
+
+.footer__left {
+    text-align: left;
+}
+
+.footer__right {
+    text-align: left;   
+    display: flex;
+    align-items: center;
+}
+
+p {
+    color: white;
+}

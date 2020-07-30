@@ -1,6 +1,5 @@
 import React from "react";
 import UsersList from "../components/UsersList";
-import { useParams } from 'react-router-dom';
 
 const Users = () => {
   const USERS = [

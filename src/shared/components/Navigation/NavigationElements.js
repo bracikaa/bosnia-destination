@@ -62,6 +62,14 @@ export const NavigationElements = () => {
         onClick={ctx.toggleMenu}
         activeClassName="activeLink"
         className="menu-item"
+        to="/places/:placeId"
+      >
+        Update Place
+      </NavLink>
+      <NavLink
+        onClick={ctx.toggleMenu}
+        activeClassName="activeLink"
+        className="menu-item"
         to="/places/random"
       >
         Random Place

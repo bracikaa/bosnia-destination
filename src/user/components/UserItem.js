@@ -13,8 +13,8 @@ const UserItem = (props) => {
             <Avatar src={props.image} alt={props.name} />
           </div>
           <div>
-            <h2>{props.name}</h2>
-            <h3>
+            <h2 className="user-item__name">{props.name}</h2>
+            <h3 className="user-item__count">
               {props.placeCount} {props.placeCount === 1 ? "Place" : "Places"}
             </h3>
           </div>
