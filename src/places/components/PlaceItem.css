@@ -22,3 +22,7 @@ li {
 img {
     height: 260px;
 }
+
+.icon-button {
+    position: static !important;
+}

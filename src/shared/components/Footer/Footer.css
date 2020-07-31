@@ -1,7 +1,7 @@
 .footer {
-    position: absolute;
     right: 0;
     left: 0;
+    bottom: 0;
     padding: 1rem;
     background-color: #204051;
     text-align: center;
@@ -23,4 +23,8 @@
 
 p {
     color: white;
+}
+
+.icon-button {
+    position: static;
 }

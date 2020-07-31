@@ -3,6 +3,7 @@ import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ExploreIcon from "@material-ui/icons/Explore";
 import EditIcon from "@material-ui/icons/Edit";
+import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import { deepOrange } from "@material-ui/core/colors";
 
 import "./PlaceItem.css";
@@ -28,13 +29,17 @@ const PlaceItem = (props) => {
       </div>
       <div>
         <div className="place-item-buttons">
-          <IconButton onClick={() => openModalHandler()} aria-label="delete">
+          <IconButton
+            className="icon-button"
+            onClick={() => openModalHandler()}
+            aria-label="delete"
+          >
             <ExploreIcon style={{ color: deepOrange[50] }} />
           </IconButton>
-          <IconButton aria-label="edit">
+          <IconButton className="icon-button" aria-label="edit">
             <EditIcon style={{ color: deepOrange[50] }} />
           </IconButton>
-          <IconButton aria-label="delete">
+          <IconButton className="icon-button" aria-label="delete">
             <DeleteIcon style={{ color: deepOrange[50] }} />
           </IconButton>
         </div>

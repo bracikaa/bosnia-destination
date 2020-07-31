@@ -13,7 +13,7 @@ const Map = (props) => {
     console.log("marker: ", marker);
   };
 
-  console.log(props);
+  console.log(process.env);
 
   return (
     <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_API_KEY}>

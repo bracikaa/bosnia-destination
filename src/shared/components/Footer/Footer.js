@@ -23,10 +23,18 @@ const Footer = () => {
       </div>
       <div className="footer__right">
         <p>Contact Me:</p>
-        <IconButton onClick={() => goToHref("github")} aria-label="github">
+        <IconButton
+          className="icon-button"
+          onClick={() => goToHref("github")}
+          aria-label="github"
+        >
           <GitHubIcon style={{ color: deepOrange[50] }} />
         </IconButton>
-        <IconButton onClick={() => goToHref("linkedin")} aria-label="linkedin">
+        <IconButton
+          className="icon-button"
+          onClick={() => goToHref("linkedin")}
+          aria-label="linkedin"
+        >
           <LinkedInIcon style={{ color: deepOrange[50] }} />
         </IconButton>
       </div>
