@@ -16,7 +16,7 @@
 }
 
 .footer__right {
-    text-align: left;   
+    text-align: left;
     display: flex;
     align-items: center;
 }
@@ -28,3 +28,4 @@ p {
 .icon-button {
     position: static;
 }
+
