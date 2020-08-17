@@ -5,6 +5,7 @@ import {
   VALIDATOR_REQUIRE,
 } from "../../shared/utils/validators";
 import { useForm } from "../../shared/hooks/form-hook";
+import Button from "../../shared/components/FormElements/Button";
 import "./Places.css";
 
 const NewPlace = (props) => {
@@ -62,9 +63,9 @@ const NewPlace = (props) => {
           validators={[VALIDATOR_REQUIRE()]}
           onInput={inputHandler}
         />
-        <button type="submit" disabled={!formState.isValid}>
-          Add Place
-        </button>
+         <Button type="submit" disabled={!formState.isValid}>
+            Update Place
+          </Button>
       </form>
     </div>
   );

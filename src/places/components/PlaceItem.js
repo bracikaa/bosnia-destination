@@ -8,20 +8,32 @@ import { deepOrange } from "@material-ui/core/colors";
 
 import "./PlaceItem.css";
 
+import MapModal from "../../shared/components/Modal/MapModal";
 import Modal from "../../shared/components/Modal/Modal";
 
 const PlaceItem = (props) => {
   const [open, setOpenModal] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
   const openModalHandler = () => setOpenModal(true);
   const closeModalHandler = () => setOpenModal(false);
+  const showDeleteWarningHandler = () => setShowConfirmModal(true);
+  const cancelDeleteHandler = () => setShowConfirmModal(false);
+  const confirmDeleteHandler = () => {
+    console.log("deleting");
+  };
 
   return (
     <li>
-      <Modal
+      <MapModal
         name={props.title}
         location={props.coordinates}
         openModal={open}
         onCancel={closeModalHandler}
+      ></MapModal>
+      <Modal
+        openModal={showConfirmModal}
+        onCancel={cancelDeleteHandler}
+        onDelete={confirmDeleteHandler}
       ></Modal>
       <div className="place-item-wrapper">
         <div className="place-item-gradient"></div>
@@ -32,14 +44,18 @@ const PlaceItem = (props) => {
           <IconButton
             className="icon-button"
             onClick={() => openModalHandler()}
-            aria-label="delete"
+            aria-label="view"
           >
             <ExploreIcon style={{ color: deepOrange[50] }} />
           </IconButton>
           <IconButton className="icon-button" aria-label="edit">
             <EditIcon style={{ color: deepOrange[50] }} />
           </IconButton>
-          <IconButton className="icon-button" aria-label="delete">
+          <IconButton
+            onClick={() => showDeleteWarningHandler()}
+            className="icon-button"
+            aria-label="delete"
+          >
             <DeleteIcon style={{ color: deepOrange[50] }} />
           </IconButton>
         </div>

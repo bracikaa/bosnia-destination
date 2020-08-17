@@ -11,11 +11,20 @@
     color: #FFFFFF;
     text-align: center;
     transition: all 0.2s;
+    cursor: pointer;
 }
 
-.button:hover {
-    background-color: #3d405b;
+.button:not([disabled]):hover {
+    color: #3d405b;
     background-color: #FFFFFF;
+}
+
+.button:not([disabled]):active {
+    border: 1px solid #3d405b;
+}
+
+.button:disabled {
+    background-color: grey;
 }
 
 @media all and (max-width:30em) {

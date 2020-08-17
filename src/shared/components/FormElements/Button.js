@@ -2,7 +2,6 @@ import React from "react";
 import './Button.css';
 
 const Button = (props) => {
-  //disabled={!formState.isValid}
   return (
     <button
       className={`button button--${props.type}`}

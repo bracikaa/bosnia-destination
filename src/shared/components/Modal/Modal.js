@@ -4,36 +4,30 @@ import Dialog from "@material-ui/core/Dialog";
 import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
-import Slide from "@material-ui/core/Slide";
-import Map from "../Map/Map";
-import "./Modal.css";
-
-const Transition = React.forwardRef(function Transition(props, ref) {
-  return <Slide direction="up" ref={ref} {...props} />;
-});
+import DialogContentText from "@material-ui/core/DialogContentText";
 
 const Modal = (props) => {
-  console.log(props);
   return (
     <div>
       <Dialog
-        fullWidth={true}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
         open={props.openModal}
-        TransitionComponent={Transition}
-        keepMounted
         onClose={props.onCancel}
-        aria-labelledby="alert-dialog-slide-title"
-        aria-describedby="alert-dialog-slide-description"
       >
-        <DialogTitle id="alert-dialog-slide-title">
-          <p className="dialog_title-title">{props.name}</p>
-        </DialogTitle>
+        <DialogTitle id="alert-dialog-title">Place Deletion</DialogTitle>
         <DialogContent>
-          <Map location={props.location}/>
+          <DialogContentText id="alert-dialog-description">
+            Do you want to proceed and delete this place? This action is not
+            reversible.
+          </DialogContentText>
         </DialogContent>
         <DialogActions>
-          <Button onClick={props.onCancel} color="primary">
+          <Button color="primary" onClick={props.onCancel} autoFocus>
             Close
+          </Button>
+          <Button color="primary" onClick={props.onDelete}>
+            Delete
           </Button>
         </DialogActions>
       </Dialog>
