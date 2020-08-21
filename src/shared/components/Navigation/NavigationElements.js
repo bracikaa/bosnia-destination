@@ -78,7 +78,7 @@ export const NavigationElements = () => {
         onClick={ctx.toggleMenu}
         activeClassName="activeLink"
         className="menu-item"
-        to="auth"
+        to="/auth"
       >
         Authenticate
       </NavLink>

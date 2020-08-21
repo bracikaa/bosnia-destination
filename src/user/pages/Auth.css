@@ -1,0 +1,41 @@
+.form-wrapper {
+    box-sizing: border-box;
+    background-color: #3d405b;
+    border: 2px solid #3d405b;
+    margin: 10px 10px;
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    display: block;
+    margin: 3rem auto;
+    width: 600px;
+    padding: 20px;
+    color: white;
+}
+
+
+.form-control {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+label {
+    margin-bottom: 4px;
+}
+
+input {
+    height: 20px;
+}
+
+input,
+textarea {
+    border: none;
+    border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0.16);
+    padding: 10px;
+    color: white;
+}
+
+.error-text {
+    color: indianred;
+}
