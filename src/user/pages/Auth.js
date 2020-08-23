@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import Button from "./../../shared/components/FormElements/Button";
 import Input from "./../../shared/components/FormElements/Input";
 import {
@@ -7,9 +7,12 @@ import {
   VALIDATOR_REQUIRE,
 } from "../../shared/utils/validators";
 import { useForm } from "../../shared/hooks/form-hook";
+import { AuthContext } from "../../shared/context/auht-context";
 import "./Auth.css";
 
 const Auth = (props) => {
+  const auth = useContext(AuthContext);
+
   const [isLoginForm, setIsLoginForm] = useState(true);
   const [formState, inputHandler, setFormData] = useForm(
     {
@@ -49,6 +52,7 @@ const Auth = (props) => {
   const formSubmitHandler = (event) => {
     event.preventDefault();
     console.log(formState.inputs);
+    auth.login();
   };
   return (
     <div className="form-wrapper">

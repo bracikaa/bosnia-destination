@@ -3,6 +3,7 @@ import { slide as Menu } from "react-burger-menu";
 import { NavLink } from "react-router-dom";
 
 import "./NavigationElements.css";
+import { AuthContext } from "../../context/auht-context";
 
 const MyContext = React.createContext();
 
@@ -24,7 +25,7 @@ export const MyProvider = (props) => {
 
 export const NavigationElements = () => {
   const ctx = useContext(MyContext);
-
+  const auth = useContext(AuthContext);
   return (
     <Menu
       right
@@ -42,46 +43,51 @@ export const NavigationElements = () => {
       >
         Home
       </NavLink>
-      <NavLink
-        onClick={ctx.toggleMenu}
-        activeClassName="activeLink"
-        className="menu-item"
-        to="/u1/places"
-      >
-        My Places
-      </NavLink>
-      <NavLink
-        onClick={ctx.toggleMenu}
-        activeClassName="activeLink"
-        className="menu-item"
-        to="/places/new"
-      >
-        New Place
-      </NavLink>
-      <NavLink
-        onClick={ctx.toggleMenu}
-        activeClassName="activeLink"
-        className="menu-item"
-        to="/places/:placeId"
-      >
-        Update Place
-      </NavLink>
-      <NavLink
-        onClick={ctx.toggleMenu}
-        activeClassName="activeLink"
-        className="menu-item"
-        to="/places/random"
-      >
-        Random Place
-      </NavLink>
-      <NavLink
-        onClick={ctx.toggleMenu}
-        activeClassName="activeLink"
-        className="menu-item"
-        to="/auth"
-      >
-        Authenticate
-      </NavLink>
+      {auth.isLoggedIn && (
+        <NavLink
+          onClick={ctx.toggleMenu}
+          activeClassName="activeLink"
+          className="menu-item"
+          to="/u1/places"
+        >
+          My Places
+        </NavLink>
+      )}
+      {auth.isLoggedIn && (
+        <NavLink
+          onClick={ctx.toggleMenu}
+          activeClassName="activeLink"
+          className="menu-item"
+          to="/places/new"
+        >
+          New Place
+        </NavLink>
+      )}
+      {auth.isLoggedIn && (
+        <NavLink
+          onClick={ctx.toggleMenu}
+          activeClassName="activeLink"
+          className="menu-item"
+          to="/places/:placeId"
+        >
+          Update Place
+        </NavLink>
+      )}
+      {!auth.isLoggedIn && (
+        <NavLink
+          onClick={ctx.toggleMenu}
+          activeClassName="activeLink"
+          className="menu-item"
+          to="/auth"
+        >
+          Authenticate
+        </NavLink>
+      )}
+      {auth.isLoggedIn && (
+        <a onClick={ctx.toggleMenu && auth.logout} className="menu-item">
+          Logout
+        </a>
+      )}
     </Menu>
   );
 };

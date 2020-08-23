@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
 import ExploreIcon from "@material-ui/icons/Explore";
@@ -7,11 +7,13 @@ import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import { deepOrange } from "@material-ui/core/colors";
 
 import "./PlaceItem.css";
-
+import {AuthContext} from '../../shared/context/auht-context';
 import MapModal from "../../shared/components/Modal/MapModal";
 import Modal from "../../shared/components/Modal/Modal";
 
 const PlaceItem = (props) => {
+  const auth = useContext(AuthContext);
+
   const [open, setOpenModal] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const openModalHandler = () => setOpenModal(true);
@@ -49,16 +51,20 @@ const PlaceItem = (props) => {
           >
             <ExploreIcon style={{ color: deepOrange[50] }} />
           </IconButton>
-          <IconButton className="icon-button" aria-label="edit">
-            <EditIcon style={{ color: deepOrange[50] }} />
-          </IconButton>
-          <IconButton
-            onClick={() => showDeleteWarningHandler()}
-            className="icon-button"
-            aria-label="delete"
-          >
-            <DeleteIcon style={{ color: deepOrange[50] }} />
-          </IconButton>
+          {auth.isLoggedIn && (
+            <IconButton className="icon-button" aria-label="edit">
+              <EditIcon style={{ color: deepOrange[50] }} />
+            </IconButton>
+          )}
+          {auth.isLoggedIn && (
+            <IconButton
+              onClick={() => showDeleteWarningHandler()}
+              className="icon-button"
+              aria-label="delete"
+            >
+              <DeleteIcon style={{ color: deepOrange[50] }} />
+            </IconButton>
+          )}
         </div>
         <h2 className="place-item-title">{props.title}</h2>
         <h3 className="place-item-title">{props.address}</h3>
