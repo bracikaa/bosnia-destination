@@ -1,6 +1,5 @@
-import React from "react";
-import { useParams } from "react-router-dom";
-import PlaceList from "./../components/PlaceList";
+const express = require("express");
+const router = express.Router();
 
 const DUMMY_PLACES = [
   {
@@ -69,7 +68,7 @@ const DUMMY_PLACES = [
     address: "Stari Most, Mostar 88000",
     location: {
       lat: 43.3373,
-      lng: 17.8150,
+      lng: 17.815,
     },
     creator: "u1",
   },
@@ -89,12 +88,30 @@ const DUMMY_PLACES = [
   },
 ];
 
-const UserPlaces = (props) => {
-  const userId = useParams().userId;
-  const filteredPlaces = DUMMY_PLACES.filter(
-    (place) => place.creator === userId
-  );
-  return <PlaceList items={filteredPlaces} />;
-};
+router.get("/:pid", (req, res, next) => {
+  const placeId = req.params.pid;
+  const places = DUMMY_PLACES.find((elem) => elem.id === placeId);
+  console.log("GET Request in Places");
+  if (!places) {
+    const error = new Error("Could not find a place for the provided place id.");
+    error.code = 404;
+    return next(error);
+  }
+  res.json({ places });
+});
 
-export default UserPlaces;
+router.get("/user/:uid", (req, res, next) => {
+  const userId = req.params.uid;
+  const places = DUMMY_PLACES.filter((place) => place.creator === userId);
+  console.log("GET Request in Places By User");
+
+  if (!places) {
+    const error = new Error("Could not find a place for the provided user id");
+    error.code = 404;
+    return next(error);
+  }
+
+  res.json({ places });
+});
+
+module.exports = router;

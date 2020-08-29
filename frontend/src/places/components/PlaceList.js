@@ -3,6 +3,7 @@ import PlaceItem from "./PlaceItem";
 import "./PlaceList.css";
 
 const PlaceList = (props) => {
+  
   if (props.items.length === 0) {
     return <h1>No places! Start exploring Bosnia!</h1>;
   } else {
