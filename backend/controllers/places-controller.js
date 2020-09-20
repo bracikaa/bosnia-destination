@@ -123,7 +123,11 @@ const createPlace = (req, res, next) => {
   const errors = validationResult(req);
 
   if (!errors.isEmpty()) {
-    return res.status(400).json({ errors: errors.array() });
+    const error = new HttpError(
+      "Invalid data passed, please check your input data",
+      422
+    );
+    return next(error);
   }
 
   const { title, description, coordinates, address, creator } = req.body;
@@ -143,6 +147,16 @@ const createPlace = (req, res, next) => {
 };
 
 const updatePlace = (req, res, next) => {
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    const error = new HttpError(
+      "Invalid data passed, please check your input data",
+      422
+    );
+    return next(error);
+  }
+  
   const { title, description } = req.body;
   const pid = req.params.pid;
 
@@ -160,6 +174,10 @@ const updatePlace = (req, res, next) => {
 const deletePlace = (req, res, next) => {
   const pid = req.params.pid;
   console.log(pid);
+  if(!DUMMY_PLACES.find(place => place.id === pid)) {
+    const error = new HttpError("Cant find place!", 404);
+    return next(error); 
+  }
   DUMMY_PLACES = DUMMY_PLACES.filter((p) => p.id !== pid);
 
   res.status(200).json({ message: "Deleted place. " });
