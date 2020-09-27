@@ -3,6 +3,8 @@ const HttpError = require("../models/http-error");
 const { validationResult } = require("express-validator");
 const getCoordForAddress = require("../util/location");
 
+const Place = require("../models/place");
+
 let DUMMY_PLACES = [
   {
     id: "p1",
@@ -90,9 +92,20 @@ let DUMMY_PLACES = [
   },
 ];
 
-const getPlaceById = (req, res, next) => {
+const getPlaceById = async (req, res, next) => {
   const placeId = req.params.pid;
-  const places = DUMMY_PLACES.find((elem) => elem.id === placeId);
+
+  let places;
+  try {
+    places = await Place.findById(placeId);
+  } catch (err) {
+    const error = new HttpError(
+      "Something went wrong, could not find a place",
+      500
+    );
+    return next(error);
+  }
+
   console.log("GET Request in Places");
   if (!places) {
     const error = new Error(
@@ -136,21 +149,29 @@ const createPlace = async (req, res, next) => {
   let coordinates;
   try {
     coordinates = await getCoordForAddress(address);
-    
   } catch (error) {
     return next(error);
   }
 
-  const createdPlace = {
-    id: uuidv4(),
+  const createdPlace = new Place({
     title,
     description,
     location: coordinates,
     address,
+    image:
+      "https://lh3.googleusercontent.com/proxy/ZjnpkmMu7KuzRrsY8l75fLB0xL4vNjPOZMAbtN0q1tayYQvCjr3S_QvAPo7pG5hnEVHQH1U_asCEqDaG1bF2j3TSFnSKd5Eu5ORE3vw0THUgpK8_W0Z9B5oXU0FmUNQ",
     creator,
-  };
+  });
 
-  DUMMY_PLACES.push(createdPlace);
+  try {
+    await createdPlace.save();
+  } catch (err) {
+    const error = new HttpError(
+      "Creating Place failed, please try again!",
+      500
+    );
+    return next(error);
+  }
 
   res.status(201).json({ place: createdPlace });
 };
