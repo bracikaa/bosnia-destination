@@ -2,17 +2,18 @@ const { v4: uuidv4 } = require("uuid");
 const HttpError = require("../models/http-error");
 const User = require("./../models/user");
 
-const DUMMY_USERS = [
-  {
-    id: "u1",
-    name: "Max Schwarz",
-    email: "test@test.com",
-    password: "testers",
-  },
-];
+const getUsers = async (req, res, next) => {
+  let users;
+  try {
+    users = await User.find({}, "-password");
+  } catch (error) {
+    let err = new HttpError("An error ocurred, please try again", 500);
+    return next(error);
+  }
 
-const getUsers = (req, res, next) => {
-  res.status(200).json({ users: DUMMY_USERS });
+  res
+    .status(200)
+    .json({ users: users.map((user) => user.toObject({ getters: true })) });
 };
 
 const signup = async (req, res, next) => {
@@ -53,10 +54,16 @@ const signup = async (req, res, next) => {
   res.status(201).json({ users: createdUser.toObject({ getters: true }) });
 };
 
-const login = (req, res, next) => {
+const login = async (req, res, next) => {
   const { email, password } = req.body;
 
-  const identifiedUser = DUMMY_USERS.find((u) => u.email === email);
+  let identifiedUser;
+  try {
+    identifiedUser = await User.findOne({ email: email });
+  } catch (error) {
+    const err = new HttpError("No user with that email", 500);
+    return next(err);
+  }
 
   if (!identifiedUser || identifiedUser.password !== password) {
     const error = new HttpError(
