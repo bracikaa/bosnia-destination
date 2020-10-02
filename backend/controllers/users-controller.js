@@ -17,7 +17,7 @@ const getUsers = async (req, res, next) => {
 };
 
 const signup = async (req, res, next) => {
-  const { name, email, password, places } = req.body;
+  const { name, email, password } = req.body;
 
   let existingUser;
 
@@ -41,7 +41,7 @@ const signup = async (req, res, next) => {
     email,
     image: "https://via.placeholder.com/150",
     password,
-    places,
+    places: [],
   });
 
   try {
