@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import Button from "./../../shared/components/FormElements/Button";
 import Input from "./../../shared/components/FormElements/Input";
+import Loader from "./../../shared/components/Loader/Loader";
 import {
   VALIDATOR_EMAIL,
   VALIDATOR_MINLENGTH,
@@ -14,6 +15,8 @@ const Auth = (props) => {
   const auth = useContext(AuthContext);
 
   const [isLoginForm, setIsLoginForm] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState();
   const [formState, inputHandler, setFormData] = useForm(
     {
       email: {
@@ -54,6 +57,7 @@ const Auth = (props) => {
     if (isLoginForm) {
     } else {
       try {
+        setIsLoading(true);
         const response = await fetch("http://localhost:5000/api/users/signup", {
           method: "POST",
           headers: {
@@ -68,14 +72,17 @@ const Auth = (props) => {
 
         const responseData = await response.json();
         console.log(responseData);
+        setIsLoading(false);
+        auth.login();
       } catch (err) {
-        console.log(err);
+        setIsLoading(false);
+        setError(err.message || "Something went wrong, please try again.");
       }
     }
-    auth.login();
   };
   return (
     <div className="form-wrapper">
+      {isLoading && <Loader></Loader>}
       <form className="place-form" onSubmit={formSubmitHandler}>
         {!isLoginForm && (
           <Input
