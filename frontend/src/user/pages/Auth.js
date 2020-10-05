@@ -13,7 +13,6 @@ import "./Auth.css";
 
 const Auth = (props) => {
   const auth = useContext(AuthContext);
-
   const [isLoginForm, setIsLoginForm] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState();
@@ -32,6 +31,7 @@ const Auth = (props) => {
   );
 
   const switchModeHandler = () => {
+    setError();
     if (!isLoginForm) {
       setFormData(
         { ...formState.inputs, name: undefined },
@@ -54,10 +54,33 @@ const Auth = (props) => {
 
   const formSubmitHandler = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
     if (isLoginForm) {
+      try {
+        const response = await fetch("http://localhost:5000/api/users/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: formState.inputs.email.value,
+            password: formState.inputs.password.value,
+          }),
+        });
+
+        const responseData = await response.json();
+        console.log(responseData);
+        if (!response.ok) {
+          throw new Error(responseData.message);
+        }
+        setIsLoading(false);
+        auth.login();
+      } catch (err) {
+        setIsLoading(false);
+        setError(err.message || "Something went wrong, please try again.");
+      }
     } else {
       try {
-        setIsLoading(true);
         const response = await fetch("http://localhost:5000/api/users/signup", {
           method: "POST",
           headers: {
@@ -72,6 +95,9 @@ const Auth = (props) => {
 
         const responseData = await response.json();
         console.log(responseData);
+        if (!response.ok) {
+          throw new Error(responseData.message);
+        }
         setIsLoading(false);
         auth.login();
       } catch (err) {
@@ -82,6 +108,7 @@ const Auth = (props) => {
   };
   return (
     <div className="form-wrapper">
+      {error && <p className="error">{error}</p>}
       {isLoading && <Loader></Loader>}
       <form className="place-form" onSubmit={formSubmitHandler}>
         {!isLoginForm && (
