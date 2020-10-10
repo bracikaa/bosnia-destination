@@ -3,6 +3,7 @@ import "./UsersList.css";
 import UserItem from "./UserItem";
 
 const UsersList = (props) => {
+  console.log(props);
   if (props.items.length === 0) {
     return (
       <div>
@@ -20,7 +21,7 @@ const UsersList = (props) => {
             id={user.id}
             image={user.image}
             name={user.name}
-            placeCount={user.places}
+            placeCount={user.places.length}
           />
         );
       })}
