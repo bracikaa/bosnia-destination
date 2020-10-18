@@ -51,12 +51,12 @@ const signup = async (req, res, next) => {
     return next(error);
   }
 
-  res.status(201).json({ users: createdUser.toObject({ getters: true }) });
+  res.status(201).json({ user: createdUser.toObject({ getters: true }) });
 };
 
 const login = async (req, res, next) => {
   const { email, password } = req.body;
-
+  console.log(req.body);
   let identifiedUser;
   try {
     identifiedUser = await User.findOne({ email: email });
@@ -74,7 +74,10 @@ const login = async (req, res, next) => {
     return next(error);
   }
 
-  res.json({ message: "Logged in!" });
+  res.json({
+    message: "Logged in!",
+    user: identifiedUser.toObject({ getters: true }),
+  });
 };
 
 exports.getUsers = getUsers;
