@@ -10,6 +10,16 @@ const app = express();
 
 app.use(bodyParser.json());
 
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Origin, x-Requested, Width, Content-Type, Accept, Authorization"
+  );
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE");
+  return next();
+});
+
 app.use("/api/places", placesRoutes);
 app.use("/api/users", usersRoutes);
 
@@ -29,11 +39,13 @@ app.use((error, req, res, next) => {
 
 mongoose
   .connect(
-    ""
+    `mongodb+srv://${usesr_name}:${password}@cluster0.qynyw.mongodb.net/appplaces?retryWrites=true&w=majority`
   )
   .then(() => {
-    app.listen(5000);
+    app.listen(5000, function () {
+      console.log("Listening on port 5000!");
+    });
   })
   .catch((err) => {
-    console.log(err);
+    console.log("An error occured", err);
   });
