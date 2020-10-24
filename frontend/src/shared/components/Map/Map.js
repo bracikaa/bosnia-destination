@@ -16,7 +16,7 @@ const Map = (props) => {
   console.log(process.env);
 
   return (
-    <LoadScript googleMapsApiKey={process.env.REACT_APP_GOOGLE_API_KEY}>
+    <LoadScript googleMapsApiKey="">
       <GoogleMap mapContainerStyle={mapStyles} zoom={16} center={props.location}>
         <Marker onLoad={onLoad} position={props.location} />
       </GoogleMap>

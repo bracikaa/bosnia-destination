@@ -92,7 +92,7 @@ const NewPlace = (props) => {
             onInput={inputHandler}
           />
           <Button type="submit" disabled={!formState.isValid}>
-            Update Place
+            New Place
           </Button>
         </form>
       </div>

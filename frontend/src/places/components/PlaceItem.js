@@ -5,14 +5,16 @@ import ExploreIcon from "@material-ui/icons/Explore";
 import EditIcon from "@material-ui/icons/Edit";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import { deepOrange } from "@material-ui/core/colors";
+import { useHistory } from "react-router-dom";
 
 import "./PlaceItem.css";
-import {AuthContext} from '../../shared/context/auht-context';
+import { AuthContext } from "../../shared/context/auht-context";
 import MapModal from "../../shared/components/Modal/MapModal";
 import Modal from "../../shared/components/Modal/Modal";
 
 const PlaceItem = (props) => {
   const auth = useContext(AuthContext);
+  const history = useHistory();
 
   const [open, setOpenModal] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
@@ -23,6 +25,10 @@ const PlaceItem = (props) => {
   const confirmDeleteHandler = () => {
     cancelDeleteHandler();
     console.log("deleting");
+  };
+
+  const goToUpdate = () => {
+    history.push(`/places/${props.id}`);
   };
 
   return (
@@ -52,7 +58,11 @@ const PlaceItem = (props) => {
             <ExploreIcon style={{ color: deepOrange[50] }} />
           </IconButton>
           {auth.isLoggedIn && (
-            <IconButton className="icon-button" aria-label="edit">
+            <IconButton
+              onClick={goToUpdate}
+              className="icon-button"
+              aria-label="edit"
+            >
               <EditIcon style={{ color: deepOrange[50] }} />
             </IconButton>
           )}
