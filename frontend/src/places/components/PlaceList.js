@@ -3,7 +3,6 @@ import PlaceItem from "./PlaceItem";
 import "./PlaceList.css";
 
 const PlaceList = (props) => {
-  
   if (props.items.length === 0) {
     return <h1>No places! Start exploring Bosnia!</h1>;
   } else {
@@ -20,6 +19,7 @@ const PlaceList = (props) => {
               address={place.address}
               creatorId={place.creator}
               coordinates={place.location}
+              onDelete={props.onDeletePlace}
             ></PlaceItem>
           );
         })}

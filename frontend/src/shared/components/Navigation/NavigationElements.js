@@ -48,7 +48,7 @@ export const NavigationElements = () => {
           onClick={ctx.toggleMenu}
           activeClassName="activeLink"
           className="menu-item"
-          to="/u1/places"
+          to={`/${auth.userid}/places`}
         >
           My Places
         </NavLink>
@@ -61,16 +61,6 @@ export const NavigationElements = () => {
           to="/places/new"
         >
           New Place
-        </NavLink>
-      )}
-      {auth.isLoggedIn && (
-        <NavLink
-          onClick={ctx.toggleMenu}
-          activeClassName="activeLink"
-          className="menu-item"
-          to="/places/:placeId"
-        >
-          Update Place
         </NavLink>
       )}
       {!auth.isLoggedIn && (
