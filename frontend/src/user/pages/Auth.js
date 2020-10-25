@@ -2,6 +2,7 @@ import React, { useState, useContext } from "react";
 import Button from "./../../shared/components/FormElements/Button";
 import Input from "./../../shared/components/FormElements/Input";
 import Loader from "./../../shared/components/Loader/Loader";
+import ImageUpload from "./../../shared/components/FormElements/ImageUpload";
 import {
   VALIDATOR_EMAIL,
   VALIDATOR_MINLENGTH,
@@ -126,6 +127,7 @@ const Auth = (props) => {
           errorText="Please enter a valid password."
           onInput={inputHandler}
         />
+        {!isLoginForm && <ImageUpload id="image"></ImageUpload>}
         <Button type="submit" disabled={!formState.isValid}>
           {isLoginForm ? "Login" : "Register"}
         </Button>
