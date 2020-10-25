@@ -36,7 +36,7 @@ const Auth = (props) => {
     clearError();
     if (!isLoginForm) {
       setFormData(
-        { ...formState.inputs, name: undefined },
+        { ...formState.inputs, name: undefined, image: undefined },
         formState.inputs.email.isValid && formState.inputs.password.isValid
       );
     } else {
@@ -47,6 +47,10 @@ const Auth = (props) => {
             value: "",
             isValid: false,
           },
+          image: {
+            value: null,
+            isValid: false
+          }
         },
         false
       );
@@ -127,7 +131,9 @@ const Auth = (props) => {
           errorText="Please enter a valid password."
           onInput={inputHandler}
         />
-        {!isLoginForm && <ImageUpload id="image"></ImageUpload>}
+        {!isLoginForm && (
+          <ImageUpload id="image" onInput={inputHandler}></ImageUpload>
+        )}
         <Button type="submit" disabled={!formState.isValid}>
           {isLoginForm ? "Login" : "Register"}
         </Button>

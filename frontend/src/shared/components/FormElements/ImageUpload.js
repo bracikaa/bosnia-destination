@@ -1,16 +1,41 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Button from "./Button";
 import "./ImageUpload";
 
 const ImageUpload = (props) => {
   const filePickerRef = useRef();
+  const [file, setFile] = useState();
+  const [preview, setPreview] = useState();
+  const [isValid, setIsValid] = useState(false);
+
+  useEffect(() => {
+    if (!file) {
+      return;
+    }
+    const fileReader = new FileReader();
+    fileReader.onload = () => {
+      setPreview(fileReader.result);
+    };
+    fileReader.readAsDataURL(file);
+  }, [file]);
 
   const pickImageHandler = () => {
     filePickerRef.current.click();
   };
 
   const filePicked = (event) => {
-    console.log(event.target);
+    let pickedFile;
+    let fileIsValid = isValid;
+    if (event.target.files && event.target.files.length === 1) {
+      pickedFile = event.target.files[0];
+      setFile(pickedFile);
+      setIsValid(true);
+      fileIsValid = true;
+    } else {
+      setIsValid(false);
+      fileIsValid = false;
+    }
+    props.onInput(props.id, pickedFile, fileIsValid);
   };
 
   return (
@@ -24,12 +49,14 @@ const ImageUpload = (props) => {
         onChange={filePicked}
       />
       <div className="preview">
-        <img src="" alt="Preview" />
+        {preview && <img src={preview} alt="Preview" />}
+        {!preview && <p>Please select an image!</p>}
       </div>
 
       <Button type="button" onClick={pickImageHandler}>
         Choose Image
       </Button>
+      {!isValid && <p>{props.errorText}</p>}
     </div>
   );
 };
