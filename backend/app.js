@@ -1,12 +1,16 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const path = require('path');
 const mongoose = require("mongoose");
+const fs = require("fs");
 
 const placesRoutes = require("./routes/places-routes");
 const usersRoutes = require("./routes/users-routes");
 const HttpError = require("./models/http-error");
 
 const app = express();
+
+app.use('/uploads/images', express.static(path.join('uploads', 'images')));
 
 app.use(bodyParser.json());
 
@@ -29,6 +33,12 @@ app.use((req, res, next) => {
 });
 
 app.use((error, req, res, next) => {
+  if (req.file) {
+    fs.unlink(req.file.path, (err) => {
+      console.log(err);
+    });
+  }
+
   if (res.headerSent) {
     return next(error);
   }
@@ -39,7 +49,7 @@ app.use((error, req, res, next) => {
 
 mongoose
   .connect(
-    `mongodb+srv://${usesr_name}:${password}@cluster0.qynyw.mongodb.net/appplaces?retryWrites=true&w=majority`
+    `mongodb+srv://username:password@cluster0.qynyw.mongodb.net/appplaces?retryWrites=true&w=majority`
   )
   .then(() => {
     app.listen(5000, function () {

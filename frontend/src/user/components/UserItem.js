@@ -10,7 +10,10 @@ const UserItem = (props) => {
       <div>
         <Link to={`/${props.id}/places`} style={{ textDecoration: "none" }}>
           <div className="user-item__avatar">
-            <Avatar src={props.image} alt={props.name} />
+            <Avatar
+              src={`http://localhost:5000/${props.image}`}
+              alt={props.name}
+            />
           </div>
           <div>
             <h2 className="user-item__name">{props.name}</h2>
