@@ -57,7 +57,7 @@ const PlaceItem = (props) => {
       ></Modal>
       <div className="place-item-wrapper">
         <div className="place-item-gradient"></div>
-        <img src={props.image} alt={props.title} />
+        <img src={`http://localhost:5000/${props.image}`} alt={props.title} />
       </div>
       <div>
         <div className="place-item-buttons">
@@ -68,7 +68,7 @@ const PlaceItem = (props) => {
           >
             <ExploreIcon style={{ color: deepOrange[50] }} />
           </IconButton>
-          {auth.userId === props.creatorId && (
+          {auth.userid === props.creatorId && (
             <IconButton
               onClick={goToUpdate}
               className="icon-button"
@@ -77,7 +77,7 @@ const PlaceItem = (props) => {
               <EditIcon style={{ color: deepOrange[50] }} />
             </IconButton>
           )}
-          {auth.userId === props.creatorId && (
+          {auth.userid === props.creatorId && (
             <IconButton
               onClick={() => showDeleteWarningHandler()}
               className="icon-button"

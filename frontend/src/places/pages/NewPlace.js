@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
 import Input from "../../shared/components/FormElements/Input";
+import ImageUpload from "../../shared/components/FormElements/ImageUpload";
 import {
   VALIDATOR_MINLENGTH,
   VALIDATOR_REQUIRE,
@@ -32,6 +33,10 @@ const NewPlace = (props) => {
         value: "",
         isValid: false,
       },
+      image: {
+        value: null,
+        isValid: false,
+      },
     },
     false
   );
@@ -41,17 +46,13 @@ const NewPlace = (props) => {
   const placeSubmitHandler = async (event) => {
     event.preventDefault();
     try {
-      await sendRequest(
-        "http://localhost:5000/api/places",
-        "POST",
-        JSON.stringify({
-          title: formState.inputs.title.value,
-          description: formState.inputs.description.value,
-          address: formState.inputs.address.value,
-          creator: auth.userid,
-        }),
-        { "Content-Type": "application/json" }
-      );
+      let formData = new FormData();
+      formData.append("title", formState.inputs.title.value);
+      formData.append("description", formState.inputs.description.value);
+      formData.append("address", formState.inputs.address.value);
+      formData.append("creator", auth.userid);
+      formData.append("image", formState.inputs.image.value);
+      await sendRequest("http://localhost:5000/api/places", "POST", formData);
       history.push("/");
     } catch (e) {
       console.log(e);
@@ -90,6 +91,11 @@ const NewPlace = (props) => {
             errorText="Please enter a valid address."
             validators={[VALIDATOR_REQUIRE()]}
             onInput={inputHandler}
+          />
+          <ImageUpload
+            id="image"
+            onInput={inputHandler}
+            errorText="Please upload an image."
           />
           <Button type="submit" disabled={!formState.isValid}>
             New Place

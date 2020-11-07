@@ -1,6 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const path = require('path');
+const path = require("path");
 const mongoose = require("mongoose");
 const fs = require("fs");
 
@@ -10,7 +10,7 @@ const HttpError = require("./models/http-error");
 
 const app = express();
 
-app.use('/uploads/images', express.static(path.join('uploads', 'images')));
+app.use("/uploads/images", express.static(path.join("uploads", "images")));
 
 app.use(bodyParser.json());
 
@@ -49,7 +49,7 @@ app.use((error, req, res, next) => {
 
 mongoose
   .connect(
-    `mongodb+srv://username:password@cluster0.qynyw.mongodb.net/appplaces?retryWrites=true&w=majority`
+    `mongodb+srv://mongoadmin:@cluster0.qynyw.mongodb.net/appplaces?retryWrites=true&w=majority`
   )
   .then(() => {
     app.listen(5000, function () {
