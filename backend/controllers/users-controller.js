@@ -1,4 +1,5 @@
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
 
 const HttpError = require("../models/http-error");
 const User = require("./../models/user");
@@ -49,7 +50,7 @@ const signup = async (req, res, next) => {
     name,
     email,
     image: req.file.path,
-    password : hashedPassword,
+    password: hashedPassword,
     places: [],
   });
 
@@ -60,7 +61,21 @@ const signup = async (req, res, next) => {
     return next(error);
   }
 
-  res.status(201).json({ user: createdUser.toObject({ getters: true }) });
+  let token;
+  try {
+    token = jwt.sign(
+      { userId: createdUser.id, email: createdUser.email },
+      "secrethash",
+      { expiresIn: "1h" }
+    );
+  } catch (error) {
+    const err = new HttpError("Signing up failed, please try again!", 500);
+    return next(err);
+  }
+
+  res
+    .status(201)
+    .json({ userId: createdUser.id, email: createdUser.email, token: token });
 };
 
 const login = async (req, res, next) => {
@@ -69,6 +84,7 @@ const login = async (req, res, next) => {
   let identifiedUser;
   try {
     identifiedUser = await User.findOne({ email: email });
+    console.log("identifiedUser", identifiedUser)
   } catch (error) {
     const err = new HttpError("No user with that email", 500);
     return next(err);
@@ -85,8 +101,9 @@ const login = async (req, res, next) => {
   let isValidPassword;
   try {
     isValidPassword = await bcrypt.compare(password, identifiedUser.password);
+    console.log(isValidPassword);
   } catch (error) {
-    const err = new Httperr("Something went wrong, plase try again", 500);
+    const err = new HttpError("Something went wrong, plase try again", 500);
     return next(err);
   }
 
@@ -95,9 +112,22 @@ const login = async (req, res, next) => {
     return next(error);
   }
 
+  let token;
+  try {
+    token = jwt.sign(
+      { userId: identifiedUser.id, email: identifiedUser.email },
+      "secrethash",
+      { expiresIn: "1h" }
+    );
+  } catch (error) {
+    const err = new HttpError("Logging in failed, please try again!", 500);
+    return next(err);
+  }
+
   res.json({
-    message: "Logged in!",
-    user: identifiedUser.toObject({ getters: true }),
+    userId: identifiedUser.id,
+    email: identifiedUser.email,
+    token: token,
   });
 };
 
