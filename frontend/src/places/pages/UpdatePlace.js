@@ -5,7 +5,7 @@ import {
   VALIDATOR_REQUIRE,
 } from "../../shared/utils/validators";
 import { useForm } from "../../shared/hooks/form-hook";
-import { AuthContext } from '../../shared/context/auht-context';
+import { AuthContext } from "../../shared/context/auht-context";
 import { useHttpClient } from "../../shared/hooks/http-hook";
 import Loader from "../../shared/components/Loader/Loader";
 import Input from "../../shared/components/FormElements/Input";
@@ -64,21 +64,21 @@ const UpdatePlace = () => {
   const placeUpdateSubmitHandler = async (event) => {
     event.preventDefault();
     try {
-    await sendRequest(
-      `http://localhost:5000/api/places/${placeId}`,
-      "PATCH",
-      JSON.stringify({
-        title: formState.inputs.title.value,
-        description: formState.inputs.description.value,
-      }),
-      {
-        "Content-Type": "application/json",
-      }
-    );
-    console.log(auth);
-    history.push('/' + auth.userid + '/places');
-    }
-    catch(err) {
+      await sendRequest(
+        `http://localhost:5000/api/places/${placeId}`,
+        "PATCH",
+        JSON.stringify({
+          title: formState.inputs.title.value,
+          description: formState.inputs.description.value,
+        }),
+        {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + auth.token,
+        }
+      );
+      console.log(auth);
+      history.push("/" + auth.userid + "/places");
+    } catch (err) {
       console.log(err);
     }
   };
